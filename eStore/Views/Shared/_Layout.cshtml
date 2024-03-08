@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<style>
+    .toggle-shopping:hover,
+    .toggle-administration:hover {
+        cursor: pointer;
+        background-color: lightgray;
+    }
+
+    body {
+        display: grid;
+        grid-template-columns: 10% auto;
+        grid-template-rows: auto 1fr auto; 
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    header {
+        grid-row: 1;
+        padding-right: 100vw;
+        box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .navigation-column {
+        grid-row: 2;
+        box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .detail-column {
+        grid-row: 2;
+        overflow-y: auto;
+    }
+
+    .container-fluid{
+        padding-top: 20px;
+    }
+
+    footer {
+        grid-row: 3;
+    }
+    
+</style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - eStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/eStore.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">eStore</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Members</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="navigation-column">
+        <nav>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <span class="nav-link text-dark toggle-shopping">Shopping</span>
+                    <ul class="nav flex-column shopping-submenu" style="display:none;">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link text-dark toggle-administration">Administration</span>
+                    <ul class="nav flex-column administration-submenu" style="display:none;">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Members" asp-action="Index">Members</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="detail-column">
+        <nav>
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </nav>
+    </div>
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            &copy; 2024 - eStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const shoppingToggle = document.querySelector('.toggle-shopping');
+        const shoppingSubmenu = document.querySelector('.shopping-submenu');
+        const administrationToggle = document.querySelector('.toggle-administration');
+        const administrationSubmenu = document.querySelector('.administration-submenu');
+
+        shoppingToggle.addEventListener('click', function () {
+            toggleSubMenu(shoppingSubmenu);
+        });
+
+        administrationToggle.addEventListener('click', function () {
+            toggleSubMenu(administrationSubmenu);
+        });
+
+        function toggleSubMenu(submenu) {
+            if (submenu.style.display === 'none' || submenu.style.display === '') {
+                submenu.style.display = 'block';
+            } else {
+                submenu.style.display = 'none';
+            }
+        }
+    });
+</script>
